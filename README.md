@@ -1,4 +1,4 @@
 A list of projects coded in java.  
-Each has an exclusive README file providing a brief description of the project.
+Each project has a designated branch containing all files of the project and a README file.
 
 
