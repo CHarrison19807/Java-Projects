@@ -1,7 +1,14 @@
+import java.util.Scanner;
 public class Game {
+    public Game () {
+        this.populateBoard();
+    }
     Space[][] board = new Space[8][8];
     private boolean winner = false;
 
+    public Space getSpace (int column, int row) {
+        return board[column][row];
+    }
     public void populateBoard() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -41,24 +48,50 @@ public class Game {
         }
     }
 
+    public void movePiece (Space start, Space end) {
+        
+
+    }
     public void printBoard () {
         for (int i = 0; i < 8; i++) {
+            System.out.print((i + 1) + " ");
             for (int j = 0; j < 8; j++) {
                 if ((board[i][j].isOccupied())) {
-                    System.out.print(board[i][j].piece.getSymbol() + " | ");
+                    System.out.print(" | " + board[i][j].piece.getSymbol());
                 } else {
-                    System.out.print("  | ");
+                    System.out.print(" |  ");
                 }
             }
             System.out.println();
         }
+        System.out.println("     1   2   3   4   5   6   7   8");
     }
 
-    public boolean isWinner() {
-        return winner;
-    }
+    public Space getLocation (String context) {
+        int row;
+        int column;
+        Scanner inputCol = new Scanner(System.in);
+        do {
+            System.out.print("\nEnter the column number containing the " +
+                    (context.equals("start") ? "piece you'd like to move: " : "space you'd like to move to: "));
+            while (!(inputCol.hasNextInt())) {
+                System.out.println("No integer found, please try again!");
+                inputCol.next();
+            }
+            column = inputCol.nextInt();
+        } while (column < 1 || column > 8);
 
-    public void setWinner(boolean winner) {
-        this.winner = winner;
+        Scanner inputRow = new Scanner(System.in);
+        do {
+            System.out.print("\nEnter the row number containing the " +
+                    (context.equals("start") ? "piece you'd like to move: " : "space you'd like to move to: "));
+            while (!(inputRow.hasNextInt())) {
+                System.out.println("No integer found, please try again!");
+                inputRow.next();
+            }
+            row = inputRow.nextInt();
+        } while (row < 1 || row > 8);
+
+        return getSpace(column - 1, row - 1);
     }
 }
