@@ -5,8 +5,9 @@ public class Player {
     private final boolean black;
 
     public Player(int val) {
-        this.name = setName(val);
         this.black = val != 1;
+        this.name = setName(val);
+
     }
 
     private String setName(int val) {

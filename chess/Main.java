@@ -4,10 +4,11 @@ public class Main {
     public static void main(String args[]) {
         Game newGame = new Game();
         newGame.printBoard();
-        newGame.getLocation("start");
-        Player playerOne = new Player(1);
-        Player playerTwo = new Player(2);
-        newGame.movePiece(newGame.getLocation("start"), newGame.getLocation("end"));
+        System.out.println(newGame.board[7][1].piece.getSymbol());
+        Player playerTwo = newGame.playerTwo;
+        System.out.println(newGame.board[7][1].piece.getClass().equals(Knight.class));
+        newGame.changeTurn();
+        newGame.movePiece(playerTwo, newGame.getLocation("start"), newGame.getLocation("end"));
     }
 
 }

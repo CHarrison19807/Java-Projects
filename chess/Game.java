@@ -1,10 +1,27 @@
 import java.util.Scanner;
 public class Game {
+
     public Game () {
         this.populateBoard();
+
     }
+    Player playerOne = new Player(1);
+    Player playerTwo = new Player(2);
     Space[][] board = new Space[8][8];
-    private boolean winner = false;
+    private boolean playerOneTurn = false;
+
+    public boolean isPlayerOneTurn() {
+        return playerOneTurn;
+    }
+
+    public void changeTurn() {
+        if (playerOneTurn) {
+            this.playerOneTurn = false;
+        } else {
+            this.playerOneTurn = true;
+        }
+        System.out.println((playerOneTurn ? playerOne.getName() : playerTwo.getName()) + " it is your turn!");
+    }
 
     public Space getSpace (int column, int row) {
         return board[column][row];
@@ -47,10 +64,33 @@ public class Game {
             }
         }
     }
+    public boolean validMove (Space start, Space end) {
+        if (!(start.isOccupied())) {
+            System.out.println("There is no piece at the first location, please try again!");
+            movePiece((playerOneTurn ? playerOne : playerTwo), getLocation("start"), getLocation("end"));
+            return false;
+        } else if (end.isOccupied()) {
+                if (start.piece.isBlack() == end.piece.isBlack()) {
+                    System.out.println("You can not attack your own piece, please try again!");
+                    movePiece((playerOneTurn ? playerOne : playerTwo), getLocation("start"), getLocation("end"));
+                    return false;
+                }
+        } else if (playerOneTurn != start.piece.isBlack()) {
+            System.out.println("You can not move the opponent's piece, please try again!");
+            movePiece((playerOneTurn ? playerOne : playerTwo), getLocation("start"), getLocation("end"));
+            return false;
+        } else if (!(start.piece.getClass().equals(Knight.class))) {
+            // check if piece 'jumps' over other pieces
+        } else if (/*piece can not move to end*/) {
 
-    public void movePiece (Space start, Space end) {
-        
+        }
+        return true;
+    }
+    public void movePiece (Player player, Space start, Space end) {
+        if (validMove(start, end)) {
+            System.out.println(player.getName() + " it is your turn!");
 
+        }
     }
     public void printBoard () {
         for (int i = 0; i < 8; i++) {
@@ -92,6 +132,8 @@ public class Game {
             row = inputRow.nextInt();
         } while (row < 1 || row > 8);
 
-        return getSpace(column - 1, row - 1);
+        return getSpace(row - 1, column - 1);
     }
+
+
 }
